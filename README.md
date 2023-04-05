@@ -21,6 +21,7 @@ Download this repository as an archive and paste the zip file (DO NOT UNZIP) int
 ## Required Mods
 Requires the following mods:
 - [Modding Standards and Utilities (MSU)](https://www.nexusmods.com/battlebrothers/mods/479) (recommended Version 1.2.4 or later)
+- [BBParser](https://www.nexusmods.com/battlebrothers/mods/479?tab=files)(if you want to save settings between restarts see the [MSU Page](https://www.nexusmods.com/battlebrothers/mods/479?tab=description))
 - [Modding Script Hooks](https://www.nexusmods.com/battlebrothers/mods/42) (also required for MSU and already included in Legends Mod)
 
 ## Compatibility 
