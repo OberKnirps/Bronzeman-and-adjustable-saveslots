@@ -16,7 +16,7 @@ The mod allows you to have additional autosave and quicksave slots and
 allows you to adjust how many additional slots you want.
 
 ## How To Install
-Download this repository as an archive and paste the zip file (DO NOT UNZIP) into your Battle Brothers Data folder *( default location on Windows: C:\Program Files (x86)\Steam\steamapps\common\Battle Brothers\data )*
+Paste the zip file (DO NOT UNZIP) into your Battle Brothers Data folder *( default location on Windows: C:\Program Files (x86)\Steam\steamapps\common\Battle Brothers\data )*
 
 ## Required Mods
 Requires the following mods:

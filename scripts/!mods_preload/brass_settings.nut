@@ -1,10 +1,18 @@
 ::Const.BrassMod.addSettings <- function() {
     // create a page
-    local bronzePage = Brass.Mod.ModSettings.addPage("bronzemanPage", "Bronzeman");
-    // create a Bronzeman saveslots
-    local bronzemanSlider = bronzePage.addRangeSetting("bronzemanSlots", 3, 1, 100, 1, "Bronzeman Slots");
-    local bronzemanToggle = bronzePage.addEnumSetting("bronzeman" , "enabled", ["enabled", "disabled"],"Bronzeman");
-    //TODO: Add settings for save conditions (e.g. before/after combat, at Daybreak)
+    local ironmanPage = Brass.Mod.ModSettings.addPage("ironmanPage", "Ironman");
+    ironmanPage.addTitle("ironmanSettingsTitle","Ironman Settings");
+    ironmanPage.addDivider("ironmanSettingsDivider");
+    ironmanPage.addRangeSetting("ironmanSlots", 3, 1, 100, 1, "Ironman slots");
+    ironmanPage.addSpacer("ironmanSpacer1", "35rem", "3rem");
+    ironmanPage.addBooleanSetting("enableIronmanSlots" ,true,"enable additional Ironman slots");
+
+    ironmanPage.addTitle("bronzemanSettingsTitle","Bronzeman Settings");
+    ironmanPage.addDivider("bronzemanSettingsDivider");
+    //TODO: BOOL allow ironmal savegaem loading within campain
+    //TODO: ENUM show all ironman slots:  disabled / menu / ingame / both
+    //TODO: ENUM additional save before Combat: disabled / pre RNG / post RNG / both
+    //TODO: BOOL additional save after leave city
 
     local saveslotPage = Brass.Mod.ModSettings.addPage("saveslotPage", "Saveslots");
 
