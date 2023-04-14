@@ -1,6 +1,6 @@
 ::Brass <- {
     ID = "mod_bronzeman_and_adjustable_saveslots",
-    Version = "1.0.0",
+    Version = "1.1.0",
     Name = "Bronzeman & adjustable Saveslots"
 };
 ::Const.BrassMod <- {};
