@@ -66,7 +66,7 @@
         }
     });
 
-    //modify savegame deletion
+    //modify savegame deletion on finish
     ::mods_hookNewObject("states/world/asset_manager",function(o){
         local getGameFinishData = o.getGameFinishData;
         o.getGameFinishData = function( _gameWon ){
@@ -87,6 +87,65 @@
         };
     });
 
+    //delete ironman and bronzeman saves in the right way
+    local deleteIronAndBronzemanSaves = function(_campaignFileName){
+        //test for ironman and find UID
+        local storages = this.PersistenceManager.queryStorages();
+        local UID = null;
+        local isIronman = false;
+        local deleteAll = false;
+        foreach( storageMeta in storages ){
+            if(storageMeta.getFileName() == _campaignFileName && storageMeta.getInt("ironman") == 1){
+
+                isIronman = true;
+                if(::MSU.String.startsWith(_campaignFileName,storageMeta.getName())){
+                    deleteAll = true;
+                    local end = _campaignFileName.find("_",storageMeta.getName().len()+1);
+                    if(end == null){
+                        //normal ironman save delete all with UID
+                        UID = _campaignFileName;
+                        break;
+                    }else{
+                        //backup ironman save, delete all with UID
+                        UID = _campaignFileName.slice(0,end);
+                        break;
+                    }
+                }else{
+                    //is bronze save delete only this
+                    break;
+                }
+            }
+        }
+        if(isIronman && !deleteAll){
+            this.logDebug("BRASS: Delete bronzeman slot named '" + _campaignFileName +"'");
+            this.PersistenceManager.deleteStorage(_campaignFileName);
+        }
+        if(isIronman && deleteAll){ //TODO: only if savegame hiding is on
+            this.logDebug("BRASS: Delete all savegames starting with '" + UID +"'");
+            local deleteList = [];
+            foreach( storageMeta in storages ){
+                if(::MSU.String.startsWith(storageMeta.getFileName(),UID)) this.PersistenceManager.deleteStorage(storageMeta.getFileName());
+            }
+        }
+    }
+    ::mods_hookNewObject("ui/screens/menu/modules/load_campaign_menu_module",function(o){
+        local onDeleteButtonPressed = o.onDeleteButtonPressed;
+        o.onDeleteButtonPressed = function(_campaignFileName){
+            deleteIronAndBronzemanSaves(_campaignFileName);
+            onDeleteButtonPressed(_campaignFileName);
+        };
+    });
+    ::mods_hookNewObject("ui/screens/menu/modules/save_campaign_menu_module",function(o){
+        local onDeleteButtonPressed = o.onDeleteButtonPressed;
+        o.onDeleteButtonPressed = function(_campaignFileName){
+            deleteIronAndBronzemanSaves(_campaignFileName);
+            onDeleteButtonPressed(_campaignFileName);
+        };
+    });
+
+
+
+    //hide ironman saves
     ::mods_hookNewObject("ui/global/data_helper",function(o){
         local convertCampaignStoragesToUIData = o.convertCampaignStoragesToUIData;
         o.convertCampaignStoragesToUIData = function (){
@@ -100,8 +159,8 @@
                 //while in ironman campain, hide the savegames associated with the current world
                 foreach(i, e in res) {
                     return res.filter(
-                        function(index, val) {
-                            return !::MSU.String.startsWith(val.fileName, this.World.Assets.getName() + "_" + this.World.Assets.getCampaignID());
+                    function(index, val) {
+                        return !::MSU.String.startsWith(val.fileName, this.World.Assets.getName() + "_" + this.World.Assets.getCampaignID());
                     });
                 }
             }else{
