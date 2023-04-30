@@ -112,7 +112,7 @@
         //add flag for bronzeman settlement saves and save before entering
         local showTownScreen = o.showTownScreen;
         o.showTownScreen = function(){
-            if(settings.getSetting("saveEnterSettlement").getValue()){
+            if(settings.getSetting("saveEnterSettlement").getValue() && this.World.Assets.isIronman()){
                 saveCampaign(this.World.Assets.getName() + "_" + this.World.Assets.getCampaignID() + "_enteredSettlement", this.World.Assets.getName() + " Entered Settlement");
             }
             this.m.Flags.set("bronzemanSave", "settlementSave");
@@ -309,7 +309,9 @@
                     //this.logDebug("BRASS: Hide Brozemanman Ingame");
                     res = res.filter(filterBronzemanHideIngame);
                 }
-                ironsaves[0].remove(ironsaves[0].find(this.World.Assets.getName() + "_" + this.World.Assets.getCampaignID()));
+                //remove current campaign so its not affected by the menuHide filters
+                if(ironsaves[0].find(this.World.Assets.getName() + "_" + this.World.Assets.getCampaignID()) != null)
+                    ironsaves[0].remove(ironsaves[0].find(this.World.Assets.getName() + "_" + this.World.Assets.getCampaignID()));
             }
             if((Brass.Mod.ModSettings.getSetting("showIronmanSaves").getValue() == "Ingame" || Brass.Mod.ModSettings.getSetting("showIronmanSaves").getValue() == "Disabled")){
                 //this.logDebug("BRASS: Hide Ironman Menu");

@@ -12,3 +12,7 @@ Initial release
 # 1.2.0
 - added bronzeman save options
 - added options to hide bronzeman or ironman saves in different menus
+
+# 1.2.1
+- added descriptions
+- minor bugfixes
