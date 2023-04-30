@@ -22,13 +22,21 @@ without the mod, by backing up the files. So play the game the way you want, as 
 The mod allows you to have additional autosave, quicksave and ironman savegames and 
 allows you to adjust how many additional slots you want.
 
+## Good to know
+- If you change the settings in the main menu, they will reset unless you
+use BBParser (see below).
+- Your ingame setting will be temporarily transferred to your main menu settings when 
+you quit to main menu.
+- Changed ingame settings will only persist for new saves. Loading a save with 
+old settings will revert your settings to the point of the save you loaded. 
+
 ## How To Install
 Paste the zip file (DO NOT UNZIP) into your Battle Brothers Data folder *( default location on Windows: C:\Program Files (x86)\Steam\steamapps\common\Battle Brothers\data )*
 
 ## Required Mods
 Requires the following mods:
 - [Modding Standards and Utilities (MSU)](https://www.nexusmods.com/battlebrothers/mods/479) (recommended Version 1.2.4 or later)
-- [BBParser](https://www.nexusmods.com/battlebrothers/mods/479?tab=files)(if you want to save settings between restarts see the [MSU Page](https://www.nexusmods.com/battlebrothers/mods/479?tab=description))
+- [BBParser](https://www.nexusmods.com/battlebrothers/mods/479?tab=files)(if you want to change settings for the main menu. See the [MSU Page](https://www.nexusmods.com/battlebrothers/mods/479?tab=description))
 - [Modding Script Hooks](https://www.nexusmods.com/battlebrothers/mods/42) (also required for MSU and already included in Legends Mod)
 
 ## Compatibility 
