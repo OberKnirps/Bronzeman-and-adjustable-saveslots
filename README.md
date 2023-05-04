@@ -45,7 +45,6 @@ but I added it as incompatible because one probably supersedes the other.
 - Probably compatible with all other mods.
 
 ## Discussion / Feedback / Bug Reports
-- Tag @OberKnirps in the [submod_chat channel](https://discord.com/channels/547043336465154049/616566479306883073) in the BB Legends Mod Discord Channel to report any issues or provide feedback.
 - Create an issue here
 
 ## Credits
