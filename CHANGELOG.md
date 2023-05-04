@@ -20,3 +20,7 @@
 # 1.0.0
 - Release
 - new version numbering
+
+# 1.0.1
+- Bugfix: Could not manually save in non ironman mode
+- Bugfix: Arena and other scripted combat starts where stuck in loading screen

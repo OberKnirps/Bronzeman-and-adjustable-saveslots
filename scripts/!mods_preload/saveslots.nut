@@ -71,6 +71,8 @@
                     return saveToSaveslot(_campaignFileName, _campaignLabel,"lastQuicksaveSlot","quicksaveSlots");
                 }
             }
+            //normal save
+            return saveCampaign(_campaignFileName, _campaignLabel);
         };
 
         //modify loading
@@ -92,7 +94,7 @@
 
         //add flag for bronzeman before-combat saves
         local startScriptedCombat = o.startScriptedCombat;
-        o.startScriptedCombat = function( _properties , _isPlayerInitiated, _isCombatantsVisible, _allowFormationPicking){
+        o.startScriptedCombat = function( _properties = null, _isPlayerInitiated = true, _isCombatantsVisible = true, _allowFormationPicking = true ){
             this.World.Flags.set("bronzemanSave", "beforeCombatSave");
             return startScriptedCombat( _properties , _isPlayerInitiated, _isCombatantsVisible, _allowFormationPicking);
         }
