@@ -25,3 +25,7 @@
 - Bug fixes:
   - Could not manually save in non ironman mode
   - Bug fix: Arena and other scripted combat starts where stuck in loading screen
+
+# 1.1.0
+- Added version control
+- Added autosave settings to non ironman mode

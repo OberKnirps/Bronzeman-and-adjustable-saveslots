@@ -63,8 +63,41 @@
                 }
             }else{
                 if(_campaignFileName == "autosave"){
-                    //autosave
-                    return saveToSaveslot(_campaignFileName, _campaignLabel,"lastAutosaveSlot","autosaveSlots");
+                    if(settings.getSetting("useBronzemanSettings").getValue()){
+                        //autosave with bronzeman settings
+                        if(!this.m.Flags.has("bronzemanSave")){
+                            this.m.Flags.set("bronzemanSave", "")
+                        }
+                        switch(this.World.Flags.get("bronzemanSave")){
+                            case "settlementSave":
+                                if(settings.getSetting("saveLeaveSettlement").getValue()){
+                                    saveToSaveslot(_campaignFileName, _campaignLabel,"lastAutosaveSlot","autosaveSlots");
+                                }
+                                break;
+                            case "beforeCombatSave":
+                                if(settings.getSetting("saveBeforeCombat").getValue()){
+                                    saveToSaveslot(_campaignFileName, _campaignLabel,"lastAutosaveSlot","autosaveSlots");
+                                }
+                                break;
+                            case "afterCombatSave":
+                                if(settings.getSetting("saveAfterCombat").getValue()){
+                                    saveToSaveslot(_campaignFileName, _campaignLabel,"lastAutosaveSlot","autosaveSlots");
+                                }
+                                break;
+                            case "enterSettlementSave":
+                                if(settings.getSetting("saveEnterSettlement").getValue()){
+                                    saveToSaveslot(_campaignFileName, _campaignLabel,"lastAutosaveSlot","autosaveSlots");
+                                }
+                                break;
+                        }
+
+                        //clear all bornzeman save flags
+                        this.m.Flags.set("bronzemanSave", "");
+                        return;
+                    }else{
+                        //autosave
+                        return saveToSaveslot(_campaignFileName, _campaignLabel,"lastAutosaveSlot","autosaveSlots");
+                    }
                 }
                 if(_campaignFileName == "quicksave"){
                     //quicksave
@@ -108,7 +141,12 @@
         local onCombatFinished = o.onCombatFinished;
         o.onCombatFinished = function(){
             this.World.Flags.set("bronzemanSave", "afterCombatSave");
-            return onCombatFinished();
+            local res = onCombatFinished();
+            if (!this.World.Assets.isIronman() && settings.getSetting("useBronzemanSettings").getValue() && settings.getSetting("saveAfterCombat").getValue())
+            {
+                this.autosave();
+            }
+            return res;
         }
 
         //add flag for bronzeman settlement saves and save before entering
@@ -117,10 +155,31 @@
             if(settings.getSetting("saveEnterSettlement").getValue() && this.World.Assets.isIronman()){
                 saveCampaign(this.World.Assets.getName() + "_" + this.World.Assets.getCampaignID() + "_enteredSettlement", this.World.Assets.getName() + " Entered Settlement");
             }
+            local res = showTownScreen();
+            if (!this.World.Assets.isIronman() && settings.getSetting("useBronzemanSettings").getValue() && settings.getSetting("saveEnterSettlement").getValue())
+            {
+                this.m.Flags.set("bronzemanSave", "enterSettlementSave");
+                this.autosave();
+            }
             this.m.Flags.set("bronzemanSave", "settlementSave");
-            return showTownScreen();
+            return res;
         };
 
+    });
+
+    //auto
+    ::mods_hookNewObject("ui/screens/world/world_screen",function(o){
+        local show = o.show;
+        o.show = function(){
+            local isWorldmap = ("Assets" in this.World) && this.World.Assets != null;
+            if (isWorldmap && this.World.Flags.has("bronzemanSave")) {
+                if (this.World.Flags.get("bronzemanSave") == "settlementSave") {
+                    this.World.State.autosave();
+                }
+            }
+
+            show();
+        };
     });
 
     //modify savegame deletion on finish

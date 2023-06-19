@@ -69,4 +69,9 @@
     local t = saveslotPage.addRangeSetting("quicksaveSlots", 3, 1, 100, 1,"Quicksave Slots");
     t.setDescription("Number of additional quicksaves");
     t.Data.NewCampaign <- true;
+
+    //BOOL
+    local t = saveslotPage.addBooleanSetting("useBronzemanSettings", false, "Use Bronzeman settings for autosaves");
+    t.setDescription("Overrides the standart autosave settings and instead makes autosaves specified by the Bronzeman settings. Show options excluded.");
+    t.Data.NewCampaign <- true;
 }
